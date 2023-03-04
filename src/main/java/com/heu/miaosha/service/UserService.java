@@ -1,5 +1,6 @@
 package com.heu.miaosha.service;
 
+import com.heu.miaosha.error.BusinessException;
 import com.heu.miaosha.service.model.UserModel;
 
 /**
@@ -10,4 +11,5 @@ import com.heu.miaosha.service.model.UserModel;
 public interface UserService {
     //通过用户id获得用户对象
     UserModel getUserById(Integer id);
+    void register(UserModel userModel) throws BusinessException;
 }

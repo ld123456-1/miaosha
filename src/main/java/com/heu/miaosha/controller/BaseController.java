@@ -18,6 +18,8 @@ import java.util.Map;
  * @date: 2023/3/4 16:40
  */
 public class BaseController {
+    public static final String CONTENT_TYPE_FORMED = "application/x-www-form-urlencoded";
+
     /**
      *通用的exceptionhandler,用于解决未被Controller层吸收的异常
      */
@@ -25,6 +27,8 @@ public class BaseController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object handlerException(HttpServletRequest request, Exception ex){
+
+
         Map<String , Object> responseData = new HashMap<>();
 
         if (ex instanceof BusinessException){

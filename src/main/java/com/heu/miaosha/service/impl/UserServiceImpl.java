@@ -11,6 +11,7 @@ import com.heu.miaosha.service.UserService;
 import com.heu.miaosha.service.model.UserModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,14 +48,23 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
         if (StringUtils.isEmpty(userModel.getName())
-        ||userModel.getAge() ==null
+          ||userModel.getAge() ==null
         ||userModel.getGender()==null
         ||StringUtils.isEmpty(userModel.getTelphone())){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
 
         UserDO  userDO = convertFromModel(userModel);
-        userDOMapper.insertSelective(userDO);
+        try {
+            userDOMapper.insertSelective(userDO);
+
+        }catch (DuplicateKeyException exception){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR , "用户手机号已经重复");
+        }
+
+
+        userModel.setId(userDO.getId());
+
 
         UserPasswordDO userPasswordDO = convertPasswordFromModel(userModel);
         userPasswordDOMapper.insertSelective(userPasswordDO);

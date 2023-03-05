@@ -14,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -31,7 +35,7 @@ import java.util.Random;
 @RequestMapping("/user")
 @Slf4j
 //跨域请求
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:63342",allowCredentials = "true",allowedHeaders = "*")
 public class UserController extends BaseController{
     @Autowired
     private UserService userService;
@@ -68,7 +72,7 @@ public class UserController extends BaseController{
      * @param telphone
      * @return
      */
-    @PostMapping(value = "/getotp",consumes = CONTENT_TYPE_FORMED)
+    @RequestMapping(method = RequestMethod.POST,value = "/getotp",consumes = CONTENT_TYPE_FORMED)
     @ResponseBody
     public CommonReturnType getOtp(@RequestParam(name = "telphone")String telphone){
 
@@ -94,15 +98,17 @@ public class UserController extends BaseController{
 
 
 
+    @RequestMapping(value = "/register",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
     public CommonReturnType register(@RequestParam(name = "telphone")String telphone,
                                      @RequestParam(name =  "otpCode")String otpCode,
-                                     @RequestParam(name = "telphone")String name,
-                                     @RequestParam(name = "telphone")Byte gender,
-                                     @RequestParam(name = "telphone")Integer age,
-                                     @RequestParam(name = "password")String password) throws BusinessException {
+                                     @RequestParam(name = "name")String name,
+                                     @RequestParam(name = "gender")Byte gender,
+                                     @RequestParam(name = "age")Integer age,
+                                     @RequestParam(name = "password")String password) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
         //获取存储在session中的短信验证码
         String inSessionOtpCode = (String) this.httpServletRequest.getSession().getAttribute(telphone);
-        if (StringUtils.equals(otpCode,inSessionOtpCode)){
+        if (!StringUtils.equals(otpCode,inSessionOtpCode)){
             throw  new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"短信验证码不正确");
         }
 
@@ -110,11 +116,18 @@ public class UserController extends BaseController{
         UserModel userModel = new UserModel();
         userModel.setName(name);
         userModel.setAge(age);
-        userModel.setGender(gender);
+        userModel.setGender(new Byte(String.valueOf(gender)));
         userModel.setTelphone(telphone);
-        userModel.setEncrptPassword(MD5Encoder.encode(password.getBytes()));
+        userModel.setEncrptPassword(this.EncodeByMd5(password));
 
         userService.register(userModel);
         return CommonReturnType.create(null);
+    }
+
+    public String EncodeByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        BASE64Encoder base64Encoder = new BASE64Encoder();
+        String newStr = base64Encoder.encode(md5.digest(str.getBytes("utf-8")));
+        return newStr;
     }
 }

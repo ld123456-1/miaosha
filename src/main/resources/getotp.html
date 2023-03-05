@@ -42,12 +42,16 @@
                 data:{
                     "telphone":$("#telphone").val(),
                 },
+                xhrFields:{withCredentials:true},
+                domain:true,
                 success:function (data){
                     if (data.status == "success"){
                         alert("otp已经发送到了您的手机,请注意查收!");
+                        window.location.href="http://localhost:63342/mallproject/register.html";
+
                     }else
                     {
-                        alert("otp发送失败,原因为"+data.data.errMsg);
+                        alert("注册失败,原因为"+data.data.errMsg);
                     }
                 },
                 error:function (data){

@@ -9,11 +9,16 @@ import com.heu.miaosha.error.BusinessException;
 import com.heu.miaosha.error.EmBusinessError;
 import com.heu.miaosha.service.UserService;
 import com.heu.miaosha.service.model.UserModel;
+import com.heu.miaosha.validator.ValidateImpl;
+import com.heu.miaosha.validator.ValidationResult;
+import org.hibernate.validator.internal.engine.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
 
 /**
  * @author: lidong
@@ -27,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserPasswordDOMapper userPasswordDOMapper;
+
+    @Autowired
+    private ValidateImpl validator;
 
 
     @Override
@@ -47,13 +55,16 @@ public class UserServiceImpl implements UserService {
         if (userModel == null){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
-        if (StringUtils.isEmpty(userModel.getName())
-          ||userModel.getAge() ==null
-        ||userModel.getGender()==null
-        ||StringUtils.isEmpty(userModel.getTelphone())){
-            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+//        if (StringUtils.isEmpty(userModel.getName())
+//          ||userModel.getAge() ==null
+//        ||userModel.getGender()==null
+//        ||StringUtils.isEmpty(userModel.getTelphone())){
+//            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+//        }
+        ValidationResult result = validator.validate(userModel);
+        if (result.isHasErrors()){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,result.getErrMsg());
         }
-
         UserDO  userDO = convertFromModel(userModel);
         try {
             userDOMapper.insertSelective(userDO);

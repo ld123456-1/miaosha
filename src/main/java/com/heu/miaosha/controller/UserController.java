@@ -124,6 +124,24 @@ public class UserController extends BaseController{
         return CommonReturnType.create(null);
     }
 
+
+    @RequestMapping(value = "/login",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType register(@RequestParam(name = "telphone")String telphone,
+    @RequestParam(name = "password")String password) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        if (StringUtils.isEmpty(telphone)||StringUtils.isEmpty(password)){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        UserModel userModel = userService.validateLogin(telphone, this.EncodeByMd5(password));
+
+
+        //将登陆凭证加入session
+        httpServletRequest.getSession().setAttribute("IS_LOGIN",true);
+        httpServletRequest.getSession().setAttribute("LOGIN_USER",userModel);
+
+        return CommonReturnType.create(null);
+    }
+
     public String EncodeByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         BASE64Encoder base64Encoder = new BASE64Encoder();

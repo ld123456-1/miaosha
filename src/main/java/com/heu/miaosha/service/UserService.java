@@ -12,4 +12,7 @@ public interface UserService {
     //通过用户id获得用户对象
     UserModel getUserById(Integer id);
     void register(UserModel userModel) throws BusinessException;
+
+    //登录功能
+    UserModel validateLogin(String telphone ,String encrptPassword) throws BusinessException;
 }

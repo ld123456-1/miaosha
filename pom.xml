@@ -60,6 +60,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.2.4.Final</version>
+        </dependency>
 
     </dependencies>
 
@@ -95,7 +100,7 @@
                     </executions>
                     <configuration>
                         <verbose>true</verbose>
-                        <overwrite>true</overwrite>
+                        <overwrite>false</overwrite>
                         <configurationFile>
                             src/main/resources/mybatis-generator.xml
                         </configurationFile>

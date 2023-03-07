@@ -1,5 +1,7 @@
 package com.heu.miaosha.dataobject;
 
+import lombok.Data;
+
 public class OrderDO {
     /**
      *

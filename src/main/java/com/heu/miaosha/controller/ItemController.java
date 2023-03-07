@@ -70,6 +70,8 @@ public class ItemController extends BaseController{
         ItemModel itemById = itemService.getItemById(id);
 
 
+        log.info(itemById.getTitle());
+
         return CommonReturnType.create(itemById);
     }
 

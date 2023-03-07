@@ -1,6 +1,7 @@
 package com.heu.miaosha.dao;
 
 import com.heu.miaosha.dataobject.ItemDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,4 +56,6 @@ public interface ItemDOMapper {
 
 
     List<ItemDO> listItem ();
+
+    int increaseSales(@Param("id") Integer id , @Param("amount") Integer amount);
 }

@@ -62,11 +62,11 @@ public class OrderModel {
         this.amount = amount;
     }
 
-    public BigDecimal getOrderAmount() {
+    public BigDecimal getOrderPrice() {
         return orderPrice;
     }
 
-    public void setOrderAmount(BigDecimal orderAmount) {
-        this.orderPrice = orderAmount;
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
     }
 }

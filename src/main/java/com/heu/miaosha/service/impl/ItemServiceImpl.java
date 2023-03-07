@@ -127,6 +127,22 @@ public class ItemServiceImpl implements ItemService {
         return itemModel;
     }
 
+    @Override
+    @Transactional
+    public boolean decreaseStock(Integer itemID , Integer amount){
+        int affectedRow = itemStockDOMapper.decreaseStock(itemID, amount);
+        if (affectedRow>0 ){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void increseSales(Integer itemId, Integer amount) throws BusinessException {
+        itemDOMapper.increaseSales(itemId,amount);
+    }
 
 
 }

@@ -40,23 +40,23 @@
         <!--生成对应表及类名-->
         <!--domainObjectName映射成java类的对象-->
         <!-- false型的是不允许使用dataobject中的example进行复杂操作 -->
-        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-        selectByExampleQueryId="false" ></table>
+<!--        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false"-->
+<!--        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--        selectByExampleQueryId="false" ></table>-->
 
 
-        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-        selectByExampleQueryId="false" ></table>
+<!--        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"-->
+<!--        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--        selectByExampleQueryId="false" ></table>-->
 
-        <table tableName="item" domainObjectName="ItemDO" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-        selectByExampleQueryId="false" ></table>
+<!--        <table tableName="item" domainObjectName="ItemDO" enableCountByExample="false"-->
+<!--        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--        selectByExampleQueryId="false" ></table>-->
 
 
-        <table tableName="item_stock" domainObjectName="ItemStockDO" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-        selectByExampleQueryId="false" ></table>
+<!--        <table tableName="item_stock" domainObjectName="ItemStockDO" enableCountByExample="false"-->
+<!--        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--        selectByExampleQueryId="false" ></table>-->
 
         <table tableName="order_info" domainObjectName="OrderDO" enableCountByExample="false"
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
